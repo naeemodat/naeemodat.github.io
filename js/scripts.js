@@ -8,4 +8,10 @@ $(function () {
   $(".cpre").click(function () {
     $("#content").load("cpre.html");
   });
+  $(".ise").click(function () {
+    $("#content").load("ise.html");
+  });
+  $(".ce").click(function () {
+    $("#content").load("ce.html");
+  });
 });
