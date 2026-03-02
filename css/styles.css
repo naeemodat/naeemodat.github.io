@@ -34,8 +34,8 @@
       z-index: 0;
     }
 .circle-img {
-  width: 50px;       /* Set equal width and height */
-  height: 50px;      /* for a perfect circle */
+  width: 150px;       /* Set equal width and height */
+  height: 150px;      /* for a perfect circle */
   border-radius: 50%; /* This creates the circular shape */
   object-fit: cover;  /* Ensures the image covers the area without distortion */
 }
