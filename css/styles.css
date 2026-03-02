@@ -28,12 +28,17 @@
       position: fixed;
       inset: 0;
       background-image:
-       url("../naeem2.jpg");
-        /* radial-gradient(circle at 15% 20%, rgba(184,147,42,0.06) 0%, transparent 50%), */
-        /* radial-gradient(circle at 85% 75%, rgba(139,58,42,0.05) 0%, transparent 45%); */
+        radial-gradient(circle at 15% 20%, rgba(184,147,42,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 85% 75%, rgba(139,58,42,0.05) 0%, transparent 45%);
       pointer-events: none;
       z-index: 0;
     }
+.circle-img {
+  width: 150px;       /* Set equal width and height */
+  height: 150px;      /* for a perfect circle */
+  border-radius: 50%; /* This creates the circular shape */
+  object-fit: cover;  /* Ensures the image covers the area without distortion */
+}
 
     /* ── NAV ── */
     nav {
