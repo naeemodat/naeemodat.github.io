@@ -28,9 +28,9 @@
       position: fixed;
       inset: 0;
       background-image:
-       url("../naeem.jpg");
-        radial-gradient(circle at 15% 20%, rgba(184,147,42,0.06) 0%, transparent 50%),
-        radial-gradient(circle at 85% 75%, rgba(139,58,42,0.05) 0%, transparent 45%);
+       url("../naeem2.jpg");
+        /* radial-gradient(circle at 15% 20%, rgba(184,147,42,0.06) 0%, transparent 50%), */
+        /* radial-gradient(circle at 85% 75%, rgba(139,58,42,0.05) 0%, transparent 45%); */
       pointer-events: none;
       z-index: 0;
     }
