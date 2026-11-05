@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Edit site updates</title>
+<style>
+:root{--paper:#F2F5F3;--ink:#13222A;--muted:#55666D;--rule:#CBD5D1;--board:#0E5A4A;--flag:#F2C230}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:32px 24px 80px}
+h1{margin:0 0 6px;font-size:30px;letter-spacing:-.02em}
+h2{margin:40px 0 4px;font-size:22px}
+p.hint{margin:0 0 14px;color:var(--muted)}
+.item{display:grid;gap:8px;padding:12px 0;border-bottom:1px solid var(--rule)}
+.sched .item{grid-template-columns:130px 100px 100px 1fr 120px 120px 36px;align-items:end}
+.news .item{grid-template-columns:150px 1fr 1fr 36px;align-items:end}
+label{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--muted)}
+input,select,textarea{font:inherit;color:var(--ink);padding:8px 9px;border:1px solid #9fb0aa;border-radius:4px;background:#fff;width:100%}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:3px solid var(--flag);outline-offset:1px}
+button{font:inherit;cursor:pointer;border-radius:4px;padding:9px 14px;border:1px solid var(--ink);background:#fff;color:var(--ink)}
+button.primary{background:var(--board);border-color:var(--board);color:#fff;font-weight:600}
+button.del{padding:8px 0;width:36px;border-color:#9fb0aa}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.steps{background:#fff;border:1px solid var(--rule);border-radius:4px;padding:14px 18px;margin:18px 0 0}
+.steps ol{margin:6px 0 0;padding-left:20px}
+#msg{margin-top:12px;color:var(--board);font-weight:600;min-height:1.4em}
+#err{color:#a12a1f;font-weight:600}
+textarea#out{height:200px;font:13px/1.4 ui-monospace,Consolas,monospace;margin-top:12px}
+@media (max-width:820px){.sched .item,.news .item{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Edit site updates</h1>
+  <p class="hint">Change the schedule and announcements below, then copy the result into <b>data.json</b> on GitHub. Nothing is published until you commit it there.</p>
+  <div class="steps">
+    <b>How to publish</b>
+    <ol>
+      <li>Edit the fields below, then press <b>Copy JSON</b>.</li>
+      <li>Open <b>data.json</b> in your GitHub repository and press the pencil (edit) icon.</li>
+      <li>Select all, paste, then press <b>Commit changes</b>. The site updates within a minute or two.</li>
+    </ol>
+  </div>
+  <div id="err"></div>
+
+  <h2>Semester label</h2>
+  <label>Shown above the schedule<input id="semester"></label>
+
+  <h2>Weekly schedule</h2>
+  <p class="hint">One row per session. Use 24-hour times, for example 13:00. Type controls the color: class, lab, or office hours.</p>
+  <div class="sched" id="sched"></div>
+  <div class="bar"><button id="addS">Add session</button></div>
+
+  <h2>Announcements</h2>
+  <p class="hint">Newest first on the site. Delete a row to remove an announcement.</p>
+  <div class="news" id="news"></div>
+  <div class="bar"><button id="addN">Add announcement</button></div>
+
+  <h2>Result</h2>
+  <div class="bar">
+    <button class="primary" id="copy">Copy JSON</button>
+    <button id="dl">Download data.json</button>
+  </div>
+  <div id="msg" role="status"></div>
+  <textarea id="out" readonly aria-label="Generated JSON"></textarea>
+</div>
+
+<script>
+const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const TYPES = [["class","Class"],["lab","Lab"],["office","Office hours"]];
+const $ = id => document.getElementById(id);
+let data = {};
+
+function el(tag, props, ...kids){
+  const e = document.createElement(tag);
+  if (props) for (const k in props){ if (k === "class") e.className = props[k]; else e[k] = props[k]; }
+  kids.forEach(k => e.append(k));
+  return e;
+}
+function field(label, input){ return el("label", null, label, input); }
+function select(opts, value){
+  const s = el("select");
+  opts.forEach(o => { const [v,t] = Array.isArray(o) ? o : [o,o]; s.append(el("option",{value:v,textContent:t,selected:v===value})); });
+  return s;
+}
+function delBtn(row){ return el("button",{class:"del",type:"button",title:"Delete this row",ariaLabel:"Delete this row",textContent:"×",onclick:() => { row.remove(); refresh(); }}); }
+
+function schedRow(x = {}){
+  const row = el("div",{class:"item"});
+  row.append(
+    field("Day", Object.assign(select(DAYS, x.day || "Sunday"), {name:"day"})),
+    field("Start", Object.assign(el("input",{type:"time",value:x.start || "10:00"}),{name:"start"})),
+    field("End", Object.assign(el("input",{type:"time",value:x.end || "11:30"}),{name:"end"})),
+    field("Title", Object.assign(el("input",{value:x.title || ""}),{name:"title"})),
+    field("Room (optional)", Object.assign(el("input",{value:x.room || ""}),{name:"room"})),
+    field("Type", Object.assign(select(TYPES, x.type || "class"),{name:"type"})),
+    delBtn(row)
+  );
+  return row;
+}
+function newsRow(x = {}){
+  const row = el("div",{class:"item"});
+  row.append(
+    field("Date", Object.assign(el("input",{type:"date",value:x.date || new Date().toISOString().slice(0,10)}),{name:"date"})),
+    field("Announcement", Object.assign(el("input",{value:x.text || ""}),{name:"text"})),
+    field("Link (optional)", Object.assign(el("input",{value:x.link || ""}),{name:"link"})),
+    delBtn(row)
+  );
+  return row;
+}
+const val = (row, n) => row.querySelector('[name="' + n + '"]').value.trim();
+
+function collect(){
+  const out = JSON.parse(JSON.stringify(data));
+  out.semester = $("semester").value.trim();
+  out.schedule = [...$("sched").children].map(r => ({
+    day: val(r,"day"), start: val(r,"start"), end: val(r,"end"),
+    title: val(r,"title"), room: val(r,"room"), type: val(r,"type")
+  })).filter(x => x.title && x.start && x.end);
+  const dayIdx = d => DAYS.indexOf(d);
+  out.schedule.sort((a,b) => dayIdx(a.day)-dayIdx(b.day) || a.start.localeCompare(b.start));
+  out.announcements = [...$("news").children].map(r => ({date: val(r,"date"), text: val(r,"text"), link: val(r,"link")})).filter(x => x.text);
+  return out;
+}
+
+function problems(out){
+  const msgs = [];
+  out.schedule.forEach(x => { if (x.end <= x.start) msgs.push(x.day + " " + x.title + ": end time must be after start time."); });
+  DAYS.forEach(d => {
+    const l = out.schedule.filter(x => x.day === d);
+    for (let i = 1; i < l.length; i++) if (l[i].start < l[i-1].end) msgs.push(d + ": " + l[i-1].title + " overlaps " + l[i].title + ".");
+  });
+  return msgs;
+}
+
+function refresh(){
+  const out = collect();
+  $("out").value = JSON.stringify(out, null, 2) + "\n";
+  $("err").textContent = problems(out).join(" ");
+  $("msg").textContent = "";
+}
+
+fetch("data.json", {cache:"no-cache"}).then(r => r.json()).then(d => {
+  data = d;
+  $("semester").value = d.semester || "";
+  (d.schedule || []).forEach(x => $("sched").append(schedRow(x)));
+  (d.announcements || []).forEach(x => $("news").append(newsRow(x)));
+  refresh();
+}).catch(() => { $("err").textContent = "Could not load data.json. Open this page from your published site, not from a local file."; });
+
+$("addS").onclick = () => { $("sched").append(schedRow()); refresh(); };
+$("addN").onclick = () => { $("news").append(newsRow()); refresh(); };
+document.addEventListener("input", refresh);
+
+$("copy").onclick = async () => {
+  refresh();
+  try { await navigator.clipboard.writeText($("out").value); $("msg").textContent = "Copied. Paste it into data.json on GitHub."; }
+  catch { $("out").select(); $("msg").textContent = "Press Ctrl+C (or Cmd+C) to copy the selected text."; }
+};
+$("dl").onclick = () => {
+  refresh();
+  const a = el("a",{href:URL.createObjectURL(new Blob([$("out").value],{type:"application/json"})),download:"data.json"});
+  a.click();
+  $("msg").textContent = "Downloaded. Upload it to your repository to replace data.json.";
+};
+</script>
+</body>
+</html>
