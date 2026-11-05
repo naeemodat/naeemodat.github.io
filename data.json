@@ -8,18 +8,18 @@
   "schedule": [
     {
       "day": "Sunday",
-      "start": "01:30",
-      "end": "14:30",
-      "title": "Microprocessor II",
-      "room": "Cyber Security Lab",
-      "type": "office"
-    },
-    {
-      "day": "Sunday",
       "start": "11:30",
       "end": "13:00",
       "title": "Office Hour",
       "room": "",
+      "type": "office"
+    },
+    {
+      "day": "Sunday",
+      "start": "13:00",
+      "end": "14:30",
+      "title": "Microprocessor II",
+      "room": "Cyber Security Lab",
       "type": "office"
     },
     {
@@ -42,7 +42,7 @@
       "day": "Tuesday",
       "start": "11:30",
       "end": "13:00",
-      "title": "Office Hours",
+      "title": "Office Hour",
       "room": "",
       "type": "office"
     },
