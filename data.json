@@ -1,0 +1,67 @@
+{
+  "name": "Dr. Naeem Odat",
+  "title": "College of Engineering",
+  "bio": "I teach and research operating systems, embedded computing, and object-oriented systems design, with a focus on rigorous engineering education.",
+  "photo": "naeem2.jpg",
+  "semester": "Second Semester 2025–2026",
+
+  "announcements": [
+    {
+      "date": "2026-11-05",
+      "text": "Example announcement: edit or delete this line in data.json.",
+      "link": ""
+    }
+  ],
+
+  "schedule": [
+    { "day": "Sunday",    "start": "10:00", "end": "11:30", "title": "Operating Systems", "room": "", "type": "class" },
+    { "day": "Sunday",    "start": "11:30", "end": "13:00", "title": "Office Hours",      "room": "", "type": "office" },
+    { "day": "Sunday",    "start": "13:00", "end": "14:30", "title": "OOP",               "room": "", "type": "class" },
+    { "day": "Sunday",    "start": "14:30", "end": "16:30", "title": "OS Lab",            "room": "", "type": "lab" },
+
+    { "day": "Monday",    "start": "10:00", "end": "11:30", "title": "Embedded Systems",  "room": "", "type": "class" },
+    { "day": "Monday",    "start": "11:30", "end": "13:00", "title": "Office Hours",      "room": "", "type": "office" },
+
+    { "day": "Tuesday",   "start": "10:00", "end": "11:30", "title": "Operating Systems", "room": "", "type": "class" },
+    { "day": "Tuesday",   "start": "11:30", "end": "13:00", "title": "Office Hours",      "room": "", "type": "office" },
+    { "day": "Tuesday",   "start": "13:00", "end": "14:30", "title": "OOP",               "room": "", "type": "class" },
+
+    { "day": "Wednesday", "start": "10:00", "end": "11:30", "title": "Embedded Systems",  "room": "", "type": "class" }
+  ],
+
+  "courses": [
+    {
+      "area": "Core computer science",
+      "title": "Operating Systems",
+      "description": "Process management, memory allocation, scheduling, and file systems in modern operating environments.",
+      "link": ""
+    },
+    {
+      "area": "Software engineering",
+      "title": "Object-Oriented Programming",
+      "description": "Design paradigms, class hierarchies, polymorphism, and software architecture using OOP principles.",
+      "link": ""
+    },
+    {
+      "area": "Hardware",
+      "title": "Embedded Systems",
+      "description": "Microcontroller programming, real-time constraints, hardware-software interfacing, and low-level system design.",
+      "link": ""
+    },
+    {
+      "area": "Lab",
+      "title": "OS Laboratory",
+      "description": "Hands-on exploration of operating system concepts through practical experiments and system programming exercises.",
+      "link": ""
+    }
+  ],
+
+  "contact": {
+    "institution": "College of Engineering",
+    "email": "",
+    "links": [
+      { "label": "Course discussions", "url": "discussions.html" },
+      { "label": "GitHub", "url": "https://github.com/naeemodat" }
+    ]
+  }
+}
