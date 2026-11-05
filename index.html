@@ -1,199 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE-edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dr. Naeem Odat</title>
+<meta name="description" content="Academic page of Dr. Naeem Odat, College of Engineering: weekly schedule, courses, and announcements.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F5F3; --ink:#13222A; --muted:#55666D; --rule:#CBD5D1;
+  --board:#0E5A4A; --flag:#F2C230; --lab:#2C3E48;
+  --head:"Schibsted Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Newsreader",Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:19px/1.6 var(--body)}
+a{color:var(--board);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--flag);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
 
+/* top bar */
+header.bar{border-bottom:1px solid var(--rule)}
+header.bar .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
+.brand{font:600 17px var(--head);color:var(--ink);text-decoration:none}
+nav{display:flex;gap:22px;font:400 16px var(--head)}
+nav a{color:var(--ink);text-decoration:none}
+nav a:hover{text-decoration:underline}
 
-  <title>Dr. Naeem Odat</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
+/* hero */
+.hero{display:grid;grid-template-columns:1fr 200px;gap:48px;align-items:center;padding:64px 0 40px}
+h1{font:800 clamp(44px,8vw,84px)/0.98 var(--head);letter-spacing:-0.03em;margin:0 0 18px}
+.hero p{max-width:34em;margin:0;font-size:21px;color:#2a3a42}
+.hero .sub{font:400 16px var(--head);color:var(--muted);margin-bottom:14px}
+.photo{width:200px;aspect-ratio:4/5;object-fit:cover;border-radius:4px;background:var(--rule)}
+
+/* live status */
+.status{display:flex;gap:18px;align-items:center;background:var(--board);color:#fff;padding:18px 22px;border-radius:4px;margin-bottom:56px}
+.led{width:12px;height:12px;border-radius:50%;background:#7a8d86;flex:none}
+.status.live .led{background:var(--flag);box-shadow:0 0 0 4px rgba(242,194,48,.28)}
+.status b{font:600 19px var(--head)}
+.status span{font:400 16px var(--head);opacity:.9}
+
+section{padding:20px 0 56px}
+h2{font:800 clamp(28px,4vw,38px)/1.1 var(--head);letter-spacing:-0.02em;margin:0 0 6px}
+.lede{font:400 16px var(--head);color:var(--muted);margin:0 0 28px}
+
+/* schedule */
+.sched{border-top:2px solid var(--ink)}
+.row{display:grid;grid-template-columns:110px 1fr;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule)}
+.row.today .dayname{color:var(--board)}
+.row.today .dayname::after{content:" today";font-weight:400;font-size:13px;color:var(--muted)}
+.dayname{font:600 17px var(--head)}
+.track{position:relative;height:74px}
+.ticks{position:relative;height:22px;margin:0 0 0 126px;font:400 13px var(--head);color:var(--muted)}
+.ticks i{position:absolute;top:0;font-style:normal;transform:translateX(-50%)}
+.block{position:absolute;top:0;bottom:0;padding:8px 10px;border-radius:3px;background:var(--board);color:#fff;overflow:hidden;font:600 15px/1.2 var(--head);border:2px solid var(--paper)}
+.block small{display:block;font:400 13px/1.3 var(--head);opacity:.88;margin-top:3px}
+.block.lab{background:var(--lab)}
+.block.office{background:var(--flag);color:var(--ink)}
+.block.live{outline:3px solid var(--ink);outline-offset:1px}
+.empty{font:400 16px var(--head);color:var(--muted)}
+
+/* announcements */
+.news{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.news li{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.news time{font:400 15px var(--head);color:var(--muted);padding-top:3px}
+
+/* courses */
+.courses{display:grid;grid-template-columns:repeat(2,1fr);gap:0 48px;border-top:2px solid var(--ink)}
+.course{padding:20px 0;border-bottom:1px solid var(--rule)}
+.course .area{font:400 14px var(--head);color:var(--muted)}
+.course h3{font:600 24px/1.2 var(--head);margin:2px 0 6px}
+.course p{margin:0;font-size:18px}
+
+/* contact */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;border-top:2px solid var(--ink);padding-top:22px}
+.contact dt{font:600 15px var(--head);color:var(--muted);margin-top:14px}
+.contact dt:first-child{margin-top:0}
+.contact dd{margin:2px 0 0}
+footer{border-top:1px solid var(--rule);padding:24px 0 40px;font:400 14px var(--head);color:var(--muted)}
+
+/* small screens: schedule becomes a plain list */
+@media (max-width:760px){
+  body{font-size:18px}
+  .hero{grid-template-columns:1fr;gap:28px;padding-top:40px}
+  .photo{width:120px}
+  .ticks{display:none}
+  .row,.news li{grid-template-columns:1fr;gap:6px}
+  .track{height:auto;display:flex;flex-direction:column;gap:6px}
+  .block{position:static;padding:10px 12px}
+  .courses,.contact{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
 </head>
-
 <body>
-  <!-- NAV -->
-<nav>
-  <a href="#" class="nav-brand">Dr. Naeem Odat</a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#courses">Courses</a></li>
-    <li><a href="#schedule">Schedule</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+<header class="bar"><div class="wrap">
+  <a class="brand" href="#top" id="brand">Dr. Naeem Odat</a>
+  <nav aria-label="Sections">
+    <a href="#schedule">Schedule</a>
+    <a href="#news" id="navNews" hidden>Announcements</a>
+    <a href="#courses">Courses</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div></header>
 
-<!-- HERO -->
-<div class="hero" id="about">
-  <div class="hero-text">
-    <div class="hero-label">Academic Portfolio</div>
-    <h1>Dr. Naeem <em>Odat</em></h1>
-    <div class="hero-title">College  of Engineering</div>
-    <p class="hero-bio">
-      Teaching and researching at the intersection of operating systems, embedded computing, and object-oriented systems design. Committed to rigorous engineering education.
-    </p>
-    <div class="hero-cta">
-      <a href="#schedule" class="btn btn-primary">View Schedule</a>
-      <a href="discussions.html" class="btn btn-secondary">Courses &amp; Discussions</a>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <div class="avatar-frame">
-      <div class="avatar-bg"></div>
-      <div class="avatar-initials">
-        <img class="circle-img" src="naeem2.jpg" alt="NO">
-      </div>
-    </div>
-    <div class="stats-row">
-      <div class="stat">
-        <div class="stat-num">4</div>
-        <div class="stat-label">Courses</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">3</div>
-        <div class="stat-label">Programs</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">2</div>
-        <div class="stat-label">Office hrs/day</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- COURSES -->
-<section id="courses">
-  <div class="section-header">
-    <span class="section-num">01</span>
-    <h2>Current <em>Courses</em></h2>
-    <div class="divider"></div>
-  </div>
-  <div class="courses-grid">
-    <div class="course-card">
-      <div class="course-tag">CS Core</div>
-      <div class="course-name">Operating Systems</div>
-      <p class="course-desc">Principles of process management, memory allocation, scheduling, and file systems in modern operating environments.</p>
-    </div>
-    <div class="course-card">
-      <div class="course-tag">Software Engineering</div>
-      <div class="course-name">Object-Oriented Programming</div>
-      <p class="course-desc">Design paradigms, class hierarchies, polymorphism, and software architecture using OOP principles.</p>
-    </div>
-    <div class="course-card">
-      <div class="course-tag">Hardware</div>
-      <div class="course-name">Embedded Systems</div>
-      <p class="course-desc">Microcontroller programming, real-time constraints, hardware-software interfacing, and low-level system design.</p>
-    </div>
-    <div class="course-card">
-      <div class="course-tag">Lab</div>
-      <div class="course-name">OS Laboratory</div>
-      <p class="course-desc">Hands-on exploration of operating system concepts through practical experiments and system programming exercises.</p>
-    </div>
-  </div>
-</section>
-
-<!-- SCHEDULE (dark section) -->
-<div class="schedule-section" id="schedule">
-  <div class="schedule-label">02 — Weekly Schedule · Second Semester 2025–2026</div>
-  <div class="schedule-wrapper">
-    <table class="schedule-table">
-      <thead>
-        <tr>
-          <th>Day</th>
-          <th>8:30 – 10:00</th>
-          <th>10:00 – 11:30</th>
-          <th>11:30 – 1:00</th>
-          <th>1:00 – 2:30</th>
-          <th>2:30 – 4:30</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Sunday</td>
-          <td></td>
-          <td><span class="cell-course">Operating Systems</span></td>
-          <td><span class="cell-office">Office Hours</span></td>
-          <td><span class="cell-course">OOP</span></td>
-          <td><span class="cell-lab">OS Lab</span></td>
-        </tr>
-        <tr>
-          <td>Monday</td>
-          <td></td>
-          <td><span class="cell-course">Embedded Systems</span></td>
-          <td><span class="cell-office">Office Hours</span></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Tuesday</td>
-          <td></td>
-          <td><span class="cell-course">Operating Systems</span></td>
-          <td><span class="cell-office">Office Hours</span></td>
-          <td><span class="cell-course">OOP</span></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Wednesday</td>
-          <td></td>
-          <td><span class="cell-course">Embedded Systems</span></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-header">
-    <span class="section-num">03</span>
-    <h2>Get in <em>Touch</em></h2>
-    <div class="divider"></div>
-  </div>
-  <div class="contact-grid">
+<main class="wrap" id="top">
+  <div class="hero">
     <div>
-      <p class="contact-intro">
-        For academic inquiries, office hours, or course discussions — <strong>reach out directly</strong> or visit during scheduled office hours.
-      </p>
-      <a href="discussions.html" class="btn btn-primary">Course Discussions →</a>
+      <div class="sub" id="title"></div>
+      <h1 id="name">Dr. Naeem Odat</h1>
+      <p id="bio"></p>
     </div>
-    <div class="contact-items">
-      <div class="contact-item">
-        <div class="contact-icon">◉</div>
-        <div>
-          <div class="contact-key">Institution</div>
-          <div class="contact-val">College  of Engineering</div>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">◎</div>
-        <div>
-          <div class="contact-key">Office Hours</div>
-          <div class="contact-val">Sun / Mon / Tue · 11:30 – 1:00</div>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">◈</div>
-        <div>
-          <div class="contact-key">GitHub</div>
-          <div class="contact-val"><a href="https://naeemodat.github.io/" style="color:inherit;">naeemodat.github.io</a></div>
-        </div>
-      </div>
-    </div>
+    <img class="photo" id="photo" alt="Portrait of Dr. Naeem Odat" hidden>
   </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-name">Dr. Naeem Odat — College  of Engineering</div>
-  <div class="footer-copy">© 2025–2026 · Second Semester</div>
-</footer>
+  <div class="status" id="status" role="status" aria-live="polite">
+    <div class="led"></div><div><b>Loading schedule…</b></div>
+  </div>
 
+  <section id="schedule" aria-labelledby="hSched">
+    <h2 id="hSched">Weekly schedule</h2>
+    <p class="lede" id="semester"></p>
+    <div class="ticks" id="ticks" aria-hidden="true"></div>
+    <div class="sched" id="sched"></div>
+  </section>
+
+  <section id="news" aria-labelledby="hNews" hidden>
+    <h2 id="hNews">Announcements</h2>
+    <p class="lede">Most recent first.</p>
+    <ul class="news" id="newsList"></ul>
+  </section>
+
+  <section id="courses" aria-labelledby="hCourses">
+    <h2 id="hCourses">Courses</h2>
+    <p class="lede">Current teaching.</p>
+    <div class="courses" id="courseList"></div>
+  </section>
+
+  <section id="contact" aria-labelledby="hContact">
+    <h2 id="hContact">Contact and office hours</h2>
+    <p class="lede">For academic questions, visit during office hours or get in touch directly.</p>
+    <dl class="contact" id="contactBox"></dl>
+  </section>
+</main>
+
+<footer><div class="wrap" id="foot"></div></footer>
+
+<script>
+const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const $ = id => document.getElementById(id);
+const mins = t => { const [h,m] = t.split(":").map(Number); return h*60 + m; };
+const fmt = t => { let [h,m] = t.split(":").map(Number); const ap = h>=12 ? "PM" : "AM"; h = h%12 || 12; return h + ":" + String(m).padStart(2,"0") + " " + ap; };
+const short = d => d.slice(0,3);
+
+function el(tag, props, ...kids){
+  const e = document.createElement(tag);
+  if (props) for (const k in props) { if (k === "class") e.className = props[k]; else if (props[k] !== undefined) e.setAttribute(k, props[k]); }
+  kids.forEach(k => e.append(k));
+  return e;
+}
+
+// Current day and time in Amman, independent of the visitor's own timezone
+function ammanNow(){
+  const parts = new Intl.DateTimeFormat("en-US", {timeZone:"Asia/Amman", weekday:"long", hour:"numeric", minute:"numeric", hour12:false}).formatToParts(new Date());
+  const get = t => parts.find(p => p.type === t).value;
+  return { day: get("weekday"), min: (Number(get("hour")) % 24) * 60 + Number(get("minute")) };
+}
+
+function setStatus(text, detail, live){
+  const s = $("status");
+  s.className = "status" + (live ? " live" : "");
+  s.replaceChildren(el("div",{class:"led"}), el("div",null, el("b",null,text), el("br"), el("span",null,detail)));
+}
+
+function renderStatus(sched, now){
+  const todayList = sched.filter(x => x.day === now.day).sort((a,b) => mins(a.start)-mins(b.start));
+  const current = todayList.find(x => mins(x.start) <= now.min && now.min < mins(x.end));
+  if (current){
+    setStatus("Now: " + current.title, "Until " + fmt(current.end) + (current.room ? " in " + current.room : ""), true);
+    return current;
+  }
+  const di = DAYS.indexOf(now.day);
+  for (let off = 0; off < 7; off++){
+    const day = DAYS[(di+off) % 7];
+    const list = sched.filter(x => x.day === day).sort((a,b) => mins(a.start)-mins(b.start))
+                      .filter(x => off > 0 || mins(x.start) > now.min);
+    if (list.length){
+      const n = list[0];
+      const when = off === 0 ? "Today" : off === 1 ? "Tomorrow" : day;
+      setStatus("Next: " + n.title, when + " at " + fmt(n.start) + (n.room ? " in " + n.room : ""), false);
+      return null;
+    }
+  }
+  setStatus("No sessions scheduled", "Check back soon.", false);
+  return null;
+}
+
+function renderSchedule(data, now, current){
+  const sched = data.schedule || [];
+  const box = $("sched");
+  box.replaceChildren();
+  if (!sched.length){ box.append(el("p",{class:"empty"},"The schedule has not been added yet.")); return; }
+  const lo = Math.floor(Math.min(...sched.map(x => mins(x.start))) / 60) * 60;
+  const hi = Math.ceil(Math.max(...sched.map(x => mins(x.end))) / 60) * 60;
+  const span = hi - lo;
+
+  const ticks = $("ticks"); ticks.replaceChildren();
+  for (let m = lo; m <= hi; m += 60){
+    const i = el("i",null, fmt(String(m/60|0).padStart(2,"0") + ":00").replace(":00",""));
+    i.style.left = ((m-lo)/span*100) + "%";
+    ticks.append(i);
+  }
+
+  DAYS.filter(d => sched.some(x => x.day === d)).forEach(d => {
+    const track = el("div",{class:"track"});
+    sched.filter(x => x.day === d).sort((a,b) => mins(a.start)-mins(b.start)).forEach(x => {
+      const b = el("div",{class:"block " + (x.type || "class") + (current === x ? " live" : "")},
+        x.title, el("small",null, fmt(x.start) + " to " + fmt(x.end) + (x.room ? " · " + x.room : "")));
+      b.style.left = ((mins(x.start)-lo)/span*100) + "%";
+      b.style.width = ((mins(x.end)-mins(x.start))/span*100) + "%";
+      track.append(b);
+    });
+    box.append(el("div",{class:"row" + (d === now.day ? " today" : "")}, el("div",{class:"dayname"}, d), track));
+  });
+}
+
+function renderNews(list){
+  const items = (list || []).filter(a => a.text).sort((a,b) => (b.date||"").localeCompare(a.date||""));
+  if (!items.length) return;
+  $("news").hidden = false; $("navNews").hidden = false;
+  const ul = $("newsList"); ul.replaceChildren();
+  items.forEach(a => {
+    const d = a.date ? new Date(a.date + "T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}) : "";
+    const body = el("div",null, a.text);
+    if (a.link) body.append(" ", el("a",{href:a.link}, "Open"));
+    ul.append(el("li",null, el("time",{datetime:a.date||""}, d), body));
+  });
+}
+
+function renderCourses(list){
+  const box = $("courseList"); box.replaceChildren();
+  (list || []).forEach(c => {
+    const h = el("h3",null, c.link ? el("a",{href:c.link}, c.title) : c.title);
+    box.append(el("div",{class:"course"}, el("div",{class:"area"}, c.area || ""), h, el("p",null, c.description || "")));
+  });
+}
+
+function officeHoursText(sched){
+  const groups = {};
+  sched.filter(x => x.type === "office").forEach(x => {
+    const k = fmt(x.start) + " to " + fmt(x.end);
+    (groups[k] = groups[k] || []).push(x.day);
+  });
+  return Object.entries(groups).map(([k, days]) =>
+    days.sort((a,b) => DAYS.indexOf(a)-DAYS.indexOf(b)).map(short).join(", ") + ", " + k);
+}
+
+function renderContact(data){
+  const c = data.contact || {}, box = $("contactBox"); box.replaceChildren();
+  const add = (label, node) => box.append(el("dt",null,label), el("dd",null,node));
+  if (c.institution) add("Institution", c.institution);
+  const oh = officeHoursText(data.schedule || []);
+  if (oh.length) add("Office hours", oh.map((t,i) => i ? [el("br"), t] : [t]).flat());
+  if (c.email) add("Email", el("a",{href:"mailto:" + c.email}, c.email));
+  (c.links || []).forEach(l => add(l.label, el("a",{href:l.url}, l.url.replace(/^https?:\/\//,""))));
+}
+
+fetch("data.json", {cache:"no-cache"}).then(r => { if(!r.ok) throw new Error(r.status); return r.json(); }).then(data => {
+  document.title = data.name;
+  $("brand").textContent = data.name;
+  $("name").textContent = data.name;
+  $("title").textContent = data.title || "";
+  $("bio").textContent = data.bio || "";
+  $("semester").textContent = data.semester || "";
+  if (data.photo){ const p = $("photo"); p.src = data.photo; p.hidden = false; p.alt = "Portrait of " + data.name; }
+  const now = ammanNow();
+  const current = renderStatus(data.schedule || [], now);
+  renderSchedule(data, now, current);
+  renderNews(data.announcements);
+  renderCourses(data.courses);
+  renderContact(data);
+  $("foot").textContent = data.name + ", " + (data.title || "") + ". " + new Date().getFullYear();
+}).catch(() => {
+  setStatus("The page content could not be loaded", "Check that data.json is in the same folder as index.html and is valid JSON.", false);
+});
+</script>
 </body>
-</html>
-
 </html>
